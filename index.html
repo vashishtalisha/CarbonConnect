@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Positioning Example</title>
+    <link rel="stylesheet" href="footer.css">
+   
+    <style>
+        body {
+            margin: 0; /* Remove default body margin */
+            padding: 0; /* Remove default body padding */
+            background-color: #b6cdc9;
+        }
+        
+        .first-box {
+            position: relative;
+            background-color: rgb(187, 219, 230);
+            height: 630px;
+            width: 100%;
+            overflow: hidden; /* Hide overflow to prevent issues */
+            box-sizing: border-box;
+        }
+
+        /* Carousel Styles */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            display: none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 24px;
+            text-align: center;
+            
+            padding: 10px;
+            border-radius: 5px;
+            opacity: 0;
+            transition: opacity 1.5s ease, transform 1.5s ease;
+        }
+
+        .round-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #ff6347; /* Complementary color of green */
+            border: none;
+            border-radius: 25px; /* Round edges */
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s ease; /* Smooth color transition */
+        }
+
+        .round-button:hover {
+            background-color: #32cd32; /* Change to green on hover */
+        }
+
+        .round-button:active {
+            background-color: #228b22; /* Darker green when clicked */
+        }
+
+        /* Fade-in and Slide-up Animation */
+        @keyframes slideFadeIn {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, 50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            margin-top: -22px;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev {
+            left: 0;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .three-sticky-notes {
+            position: absolute;
+            top: 560px;
+            left: 50%; /* Center the container horizontally */
+            transform: translateX(-50%); /* Adjust for centering */
+            display: flex; /* Use flexbox to align child elements */
+            gap: 75px; /* Add spacing between notes */
+        }
+
+        .note1, .note2, .note3 {
+            background-color: #fff; /* Set background color for visibility */
+            height: 320px;
+            width: 320px;
+            display: flex;
+            flex-direction: column;
+            
+        
+            align-items:center;
+            color: #fff; /* Set text color for visibility */
+            padding:10px; /* Remove excessive padding */
+        }
+
+        .note1 {
+            background-color: rgb(255, 255, 255);
+        
+        }
+
+        .note2 {
+            background-color: rgb(255, 255, 255);
+        }
+
+        .note3 {
+            background-color: rgb(255, 255, 255);
+        }
+
+        .note-icon {
+            width: 200px;
+            height: 200px;
+            margin-top:0px;
+        
+    
+        }
+        .note-icon2 {
+            width: 300px;
+            height: 200px;
+            margin-top:0px;
+        
+    
+        }
+
+        .note-text {
+            font-size: 18px;
+            text-align: center;
+            color: #000000;
+        }
+
+        .second-box {
+    position: relative;
+    background-color: rgb(187, 219, 230);
+    height: 400px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-top: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden; /* Ensure child elements are contained within */
+}
+
+.second-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.5s ease; /* Smooth transition */
+}
+
+.second-box-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 1.5s ease, transform 1.5s ease;
+}
+
+.second-box:hover .second-box-text {
+    opacity: 1; /* Show text on hover */
+    transform: translate(-50%, -50%) scale(1.1); /* Slight zoom effect */
+}
+
+.second-box:hover img {
+    transform: scale(1.1); /* Zoom effect on image */
+}
+
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .line {
+            flex-grow: 1;
+            height: 1px;
+            background-color: #0d571f;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        .title-word {
+        font-size: 1.5em;
+        font-weight: bold;
+        }
+    
+
+        .partners-logos {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 175px; /* Horizontal spacing between logos */
+            row-gap: 20px; /* Vertical spacing between rows of logos */
+            margin-top: 20px;
+        }
+
+        .partner-logo {
+            width: 250px;
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .partner-logo img {
+            height:250px;
+            width: 250px;
+        }
+
+
+    </style>
+</head>
+<body >
+    
+    
+    <div class="first-box">
+        <div class="carousel-container">
+            <div class="carousel-slide fade">
+                <img src="https://images4.alphacoders.com/135/1351253.png" alt="Slide 1">
+                <div class="carousel-text">
+                    <h1>CarbonConnect</h1>
+                    <p>Simplify,Connect & Offset</p>
+                    <a href="carbon connect login.html" class="round-button">Get Started</a>
+
+                </div>
+            </div>
+            <div class="carousel-slide fade">
+                <img src="https://wallpapers.com/images/hd/aesthetic-nature-dxhvdcplq0s02jat.jpg" alt="Slide 2">
+                <div class="carousel-text">
+                    <h1>CarbonConnect</h1>
+                    <p>Simplify,Connect & Offset</p>
+                    <a href="carbon connect login.html" class="round-button">Get Started</a>
+</div>
+            </div>
+            <div class="carousel-slide fade">
+                <img src="https://st4.depositphotos.com/28053878/40397/i/450/depositphotos_403977870-stock-photo-mysterious-green-forest-rain-small.jpg" alt="Slide 3">
+                <div class="carousel-text">
+                    <h1>CarbonConnect</h1>
+                    <p>Simplify,Connect & Offset</p>
+                    <a href="signin.html" class="round-button">Get Started</a>
+
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+            <a class="next" onclick="changeSlide(1)">&#10095;</a>
+        </div>
+    </div>
+    <div class="three-sticky-notes"> 
+        <div class="note1">
+            <img src="images/img1.jpeg" alt="Icon 1" class="note-icon">
+            <div class="note-text">Calculate your Carboon Footprints Today</div>
+            <br>
+            <a href="quiz.html" class="round-button">Take quiz</a>
+        </div>
+        <div class="note2">
+            <img src="images/img2.jpeg" alt="Icon 2" class="note-icon2">
+            <div class="note-text">Explore Projects</div>
+            <br>
+            <a href="project.html" class="round-button">Explore</a>
+        </div>
+        <div class="note3">
+            <img src="images/img3.jpeg" alt="Icon 3" class="note-icon">
+            <div class="note-text">Be Responsible and Offset</div>
+            <br>
+            <a href="bidding.html" class="round-button">Bid & Buy</a>
+        </div>
+    </div>
+    <div class="second-box">
+        <div class="second-box-text">Text Above the Picture</div>
+        <img src="images/WhatsApp Image 2024-09-03 at 11.43.03 PM.jpeg" alt="Second Box Image">
+    </div>
+
+
+    <div class="section-title">
+        <div class="line"></div>
+        <span class="title-word">Our Partners</span>
+        <div class="line"></div>
+    </div>
+
+    <div class="partners-section">
+        
+        <div class="partners-logos">
+            <div class="partner-logo">
+                <img src="https://cdn.logojoy.com/wp-content/uploads/2018/05/01104846/1952-768x591.png" alt="Company Logo 1">
+            </div>
+            <div class="partner-logo">
+                <img src="https://logomakerr.ai/blog/wp-content/uploads/2022/08/2019-to-Present-Zara-logo-design-1024x538.jpg" alt="Company Logo 2">
+            </div>
+            <div class="partner-logo">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATQAAACkCAMAAAAuTiJaAAAAh1BMVEX///8AAAB+fn7s7Oz8/PxOTk52dnZXV1dEREQhISHl5eUxMTGdnZ3Nzc319fX5+fm8vLzZ2dliYmLv7++rq6s6Ojri4uKSkpLFxcWgoKC0tLSVlZUvLy/X19c3Nze+vr6GhoYVFRVnZ2d4eHgmJiYdHR1cXFxJSUkXFxcLCwtTU1Nubm5lZWX3vT/jAAAMjElEQVR4nO1d6WKyOhAVQWtVFkURccPWaq19/+e7IjDJJIEE7yeIzflXGzA5kDmZJbHT0dDQ0NDQ0NDQ0NDQaAkCr+ketA7Oam9Mmu5EyxAODMP4aLoXrUJwMW7YNd2R9sBZ7lPOjK3fdF/aAntuAMZNd6YdyGdmBq0FcrhLA0NrgRTh1mChtaAcwwtHmWHMtRaUgJuZGRZNd+yJEc7FnBl7rQUFEM7MXAuspnv3lLDG+2LODEM77gKEpzLKDGOgtYDFsFtOmaG1gIWzPEg5M761FtAI3+SUXfGrtQAQyGdmBq0FgE9VznSMiMA+K7OmtQCwUCZNx4gAJh/VKMK06b4+DyL1V01rQQ7rQ5m0g9t0Z58GG/VXTWsBoIIWBE339WngrJVJOzbd1+dBBS2Imu7r08CaKpOmtQAwUX/VtBYAYnXWtF+Qw1EIqWX4w36BG2LjpP0COSZHVgfVQpEJRk4zfW4Y5upsGO9D9JnWglJYu61o7MohXOP897RgAosyG31ewS+Y/rF8gb/aw9iPd2vB36oj2qFyjbu14C/lCyZMucYaa0GFGNGqoRHUDmfMJVFi3ELdL/grWrATFVJhLTC1FiAE4kIqrQXFsMZFY5/hhj/KpG3NZoZSG3bF047VAp07TlFW4mgYXdy4ghZsmhlOHXALZ2YGrQUcCouPAT93a8GL5gvKZ2YGrAXWUZm0l9xf4Iy/VMa+xjq42SuzFjcyrEfCCnuKY79bC/YvpwU75bEbeOx/uY7IlEoAQGsBoMLYGS1Qzx1vXy5foCKdKd4ZLVD3C+JGRvZAVIiP3a0Fr1dHtFIfO9YCv4Jf0NDYHgZHXQd7+MqZOt0vpwWe+tjv1oLDq7mg1q86a1gH/3JNaaA+dq0FgAr1tFgLHCW/9YaX0wJXXQdP+Mq/XEdUwQVltEA9d3x4Ob9APT62x/GxCnVE7c8dm3jsQ/Wxx/hGf6imNDp84g8qjJ2pI9orX9ju84g2iSUK0UfuSHnsjF/wN7TATFcYJ2yY7/cLVGO/Lc4XWF7uazJ5c3UtODAxInW6W6oFG+IzveNF+uTu+Jh6TWkr8wW34mPA/T4RkztW31/QvvOIyMzMgLXAvztfUCFG1DYtmHC7g3t3awGOj1XQgnadR+SsBDZriduox8eYOiJb+cJWaQE7M1McsBbcnzdX14Kv1vgF/MzM0MftKsSIsBYM1eMkLdECt4QLRgvU8wVvd2tBK2pKvbK34J/5Beo1pS3wCwJJBoA5QLqCFmC/4IW0oGxmpmD32an7BffXET23FpTOzAwXfEkdWvDM+YJA7awbPPYqWoB18BW0wFetNxhgHbxbC1z1OMmz7jUzB8pDwFpQ4SymER77C2iB+pmE3/VrwbPuNQvelYfAaMHddUTDCjGiGpmogoLT3EVgciXqMaI3/JXtjxE5FQI2WAfvril1K+w7Fp9HNFxNj3GTczdUHzsTI1KvKWXy5hW0QFhHNBt9RlG8jRs84amvPgTsE1XIm8f4K9VjRKI6ouhsO77TGf7E/P/qQqCug/fHiPBcMtXlh/cL/PMmOrz1+u5wbXP/rA3RZ1cVvjtOsUpC2c5gPUoxkF04zq9Ll/me8ld+cjtovVNnebny7nUWXfZ/zwkzfwNuqgBLY+lZhWDGLrKWUixWneUpGq8nHa8lRyQCaT1E2pss0Aqk9SUN5VgsOsvRNAmMatKUsbtOz8/Oamp1FvH/vlkteALSnPNm1u+488g8tCQV/wSkdTzD9q/cbXrx/79XLXgG0q6s/cyiS3sK6J+CtI4fdbvLobzdkwCTNkd/leHfktYyYNImdgap86xJU3q3MF6FNMtVjRJYDrTEpLlOBvGdXAeYlZCm0BVns5td4dlBQ8ENJ1xdevPtdnDszm4zyxyaCYaco2fuFh+na8vTNI4Sy4tJO2a+5/rCvnfDKJ5er5ufPhZectNC0hx7fPlJuvLGdoW+5WZ1hNzfeXtchLUTFyzooOv3h+d25u+HBO9MYdgmpsu53/t2x1dSz7BPhzHW8aaItOGYzuycp5HT+flKuzIn6hh8coGYXlQrbWbM98DLw/aoimDCR9qmXn5xCWk2n6X7hBA3TZq/4EJEgyh/oF9A2uybu1/ylTVGbnfCNG9OxYiQZgn7CoQXkuYIo2xwHUVaKMwf5i2hEqIogzOqK5pWfGQcS5ojia4WkWZKksGENEl+JSetOBWxrmd3qCXLOQJpjiwRXkBaIMs+A2myrmSkle3NndZi16Tx6Zw0V5pAF5PmSzP2OWnStGlGGm1Xv9ajA7IZITfCfw95wjEnTZ4FF5Lmyje6Z6TJa0FS0hz4+xzbQ9/3gx01B/5/GFiKyZ7u1Pd2MOdy3RlpeEjvopZC0nDm+TAfbLmd2ClpAfp8PxrMuRKslDTynEl9PbHLjy+XRPU6l13SJ2czxp1NSfPp1Vk3TD7z7cVeShpd3/G9SIJeHTNkBCUljZ79U294vdqdLPEWv5Q0uJrOSsECYP9wKaB2Uw9IyNNBxiUljfrol3TLR8MXkUbZny5ZuwSo2PRGGpUtnpOFA/7B+5Q0eNB04om8fo82atRG8l+kOnSK/UYaddINjvPRNlFAGpU8xnUItIVMSKPON3lDE4xOvaekQdHEmlrLDo/HaYLj8dHxbtIhZv8qzdqNNMJNzLSkWBOQRrSZ2e9Is5aQRtjtMYsGaoNjShopB98vG3DUYUhf3IEEZFokpJHzL0/cTcgE5EkjW80+2cssshJJSANLvueir+SxpKShepGP2aZe4lzo95L/H8zHhDQfHELeT4Egh4A08irzx0qT//VpQyEodQTmU9LYSrDDx9Ku7xSKYJ93RvCd8HwT0mCK/AhuA5WTPGkwPlGxALS8kmbm641zWVdS0shTojBd1pS7g2fNzZ0rIOCTkAaDZy1TArB/PGlguERV2XSUA56KqNDRzxnNPIICF3i+qiPIAetVERWdvKcJaTB4UbdKslFgfkRpIjqeBsSPBQ1hfmakFRZcnuPHF3/DoxYubXIzlpAGM1DUqRLS8nXEXmSsadLg+QkPmWNIKylAHzx8kqqTBgopMrgKpH2LvoAmDYI9SqQxi2oah0dH1KCnwtpfmjToo+i3FUpIy511kXlHpIFrIrQU+T2p7VibfsFhYo/etg2GRLSjwaIjt7CgE72TEN7iSYM3VGQLgag+RWAsaAiHzKA9bIH3KbRtD65MAMkS1XTBEj0hDd7JWNASZjlPGpAteoFAXfoU8fzimeoKs/Gv49uz/pxNb8wfu2Yjx2IIzCfY/oQ0GJPoLDPwBXnSgGwBFw6dIyAnmQpsErDLkna7zWS3wPtsH7zwACeZj9yRkHJCGhF53ncgbipPGgkM8fOahMASNwom8i/X0NyXkZbA3dBBqgdLQXE8hfqxhZvDTvZLseEqh4S8eNJI7GLE2mcq/pGQRoJUnH6SQFtCmvPZz7Cg1zETEhJ9cGyI2gWFJyidbRmhbLgxx0+b3moiiHKQvBHzG1JDyognpBFTcWYGTXXlRhr8dUDPgXzToxcdpEPfdFdRru5GGsXNgLYZKDsnII36JZo3lHSmhe8WhCRBpDO9AnLpwFtCGnVeG2KHhOMf7UzRmyzi/BWy8E+0pZFbOiw5zh+xO0OLJVHklgpJvM/yl43ZhnsjjViuqy8MNiA80Q1vNo1EK39oVfpBjR4K1PtLZE824ZjJt2eJFZTA6yYtd2wFgYg0hx7118LbTGyPXc6nOQIU8fmYJV1ZMu7SjQ+qXQ+MikmCbBULvu6AezJkyEgzhdUTUtJUdoplKTz5RrwbaT79yTaOduFuRj9RoU/xbyHfEZvnPeVb88TJYnlmNSPNl56ynM688pzyoI54pPRNgLIE6WbOgrIEaQ4/z7BLt/Bl5qo0ZV9Hhv3K2r68p6QARsZaUQGM7KffoJZjIjEBGWllh9zVMDlvCMrtGlVqZZfP5cJSKwnbpGpoWH7wUC6MftFe3O/6fvNBWD42oCO3OUxRb3/kRX0TUcEREETVp7kigzXIF75kNREJp+il1u3YXIHjfAYHHuPf4rHZg5h6OziJelC8j8Dy2H3x041462LQZcIW2yV482eyBHO8C6Mbh7j2bVGT8RE6u+16VwmaZXtYZ9j/sewFGf8gDt2Ou8xa3uZGftmYmSluGJO3o7ewrY6Zt2Rsd7Cc5g/MWPcjn9xziZRxuBt3f0+jw/thfuyPw0Z+e9Ya7mbj1WoZbWSi7Qbe8tZyUk3enUm0XF2v82QV7JYZJl0Zz2xpGNZ1fN93Hr6e1dDQ0NDQ0NDQ0NB4UfwHyNPDObZRvuMAAAAASUVORK5CYII=" alt="Company Logo 3">
+            </div>
+            <div class="partner-logo">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRB64W9wpB0ib-7xX8bdfUv3HrH-e8GiSqStw&s" alt="Company Logo 4">
+            </div>
+            <div class="partner-logo">
+                <img src="data:image/png;base64,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" alt="Company Logo 5">
+            </div>
+            <div class="partner-logo">
+                <img src="https://www.boozyshop.be/cdn/shop/collections/beauty-of-joseon-logo.png?crop=center&height=500&v=1706865929&width=600" alt="Company Logo 6">
+            </div>
+        </div>
+    </div>
+    <footer class="footer-distributed">
+
+        <div class="footer-left">
+          <h3>Carbon<span>Connect</span></h3>
+          <p class="footer-links">
+            <a href="index.html" class="link-1">Home</a>
+            <a href="collabs.html">Collaborators</a>
+            <a href="leaderboard.html">Leaderboard</a>
+            <a href="about.html">About</a>
+            <a href="faq.html">Faq</a>
+            <a href="contact.html">Contact</a>
+          </p>
+          <p class="footer-company-name">CarbonConnect © 2024</p>
+        </div>
+    
+        <div class="footer-center">
+          <div>
+            <i class="fa fa-map-marker"></i>
+            <p><span>Chitkara University</span> Rajpura, Punjab</p>
+          </div>
+          <div>
+            <i class="fa fa-phone"></i>
+            <p>+91-8570893065</p>
+          </div>
+          <div>
+            <i class="fa fa-envelope"></i>
+            <p><a href="mailto:support@company.com">carbonconnect4570@gmail.com</a></p>
+          </div>
+        </div>
+    
+        <div class="footer-right">
+          <p class="footer-company-about">
+            <span>About the company</span>
+           Made  with the ambition to do good for the environment while trying to increase efforts from each individual's end.
+          </p>
+          <div class="footer-icons">
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-linkedin"></i></a>
+            <a href="#"><i class="fa fa-github"></i></a>
+          </div>
+        </div>
+      </footer>
+    <script>
+        let slideIndex = 0;
+        showSlides(slideIndex);
+
+        function changeSlide(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function showSlides(n) {
+            let slides = document.getElementsByClassName("carousel-slide");
+            let texts = document.getElementsByClassName("carousel-text");
+
+            if (n >= slides.length) { slideIndex = 0; }
+            if (n < 0) { slideIndex = slides.length - 1; }
+
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+                texts[i].style.opacity = "0";
+                texts[i].style.transform = "translate(-50%, 50px)";
+            }
+
+            slides[slideIndex].style.display = "block";
+            texts[slideIndex].style.animation = "slideFadeIn 1.5s ease forwards";
+        
+        }
+
+        document.querySelector('.second-box').addEventListener('mouseenter', function() {
+    this.querySelector('img').style.filter = 'brightness(70%)'; // Dim the image
+});
+
+document.querySelector('.second-box').addEventListener('mouseleave', function() {
+    this.querySelector('img').style.filter = 'brightness(100%)'; // Reset brightness
+});
+ 
+    </script>
+</body>
+</html>

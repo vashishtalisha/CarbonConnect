@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="contact.css">
+    <link rel="stylesheet" href="footer.css">
+    <title>Document</title>
+</head>
+<body>
+   
+  <header class="navbar">
+    <img src="images/CarbonConnect-removebg-preview.png" alt="Logo">
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="project.html">Projects</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="bidding.html">Bid</a>
+        <a href="quiz.html">FootprintCalc</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="about.html">About Us</a>
+        
+    </nav>
+    <a href="profile.html" class="profile-icon">
+        <i class="fas fa-user"></i>
+    </a>
+</header>
+    <div class="contact-container">
+        <div class="left-col">
+          <img class="logo" src="https://www.indonesia.travel/content/dam/indtravelrevamp/en/logo.png"/>
+        </div>
+        <div class="right-col">
+          <div class="theme-switch-wrapper">
+          <label class="theme-switch" for="checkbox">
+              <input type="checkbox" id="checkbox" />
+              <div class="slider round"></div>
+        </label>
+        <div class="description">Dark Mode</div>
+      </div>
+          
+          <h1>Contact us</h1>
+          <p>Planning to register your project or maintaining your company portfolio? Contact Us.</p>
+          
+          <form id="contact-form" method="post">
+            <label for="name">Full name</label>
+        <input type="text" id="name" name="name" placeholder="Your Full Name" required>
+            <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="Your Email Address" required>
+            <label for="message">Message</label>
+        <textarea rows="6" placeholder="Your Message" id="message" name="message" required></textarea>
+            <!--<a href="javascript:void(0)">--><button type="submit" id="submit" name="submit">Send</button><!--</a>-->
+        
+      </form>
+      <div id="error"></div>
+      <div id="success-msg"></div>
+        </div>
+      </div>
+      <footer class="footer-distributed">
+
+        <div class="footer-left">
+          <h3>Carbon<span>Connect</span></h3>
+          <p class="footer-links">
+            <a href="index.html" class="link-1">Home</a>
+            <a href="collabs.html">Collaborators</a>
+            <a href="leaderboard.html">Leaderboard</a>
+            <a href="about.html">About</a>
+            <a href="faq.html">Faq</a>
+            <a href="contact.html">Contact</a>
+          </p>
+          <p class="footer-company-name">CarbonConnect © 2024</p>
+        </div>
+    
+        <div class="footer-center">
+          <div>
+            <i class="fa fa-map-marker"></i>
+            <p><span>Chitkara University</span> Rajpura, Punjab</p>
+          </div>
+          <div>
+            <i class="fa fa-phone"></i>
+            <p>+91-8570893065</p>
+          </div>
+          <div>
+            <i class="fa fa-envelope"></i>
+            <p><a href="mailto:support@company.com">carbonconnect4570@gmail.com</a></p>
+          </div>
+        </div>
+    
+        <div class="footer-right">
+          <p class="footer-company-about">
+            <span>About the company</span>
+           Made  with the ambition to do good for the environment while trying to increase efforts from each individual's end.
+          </p>
+          <div class="footer-icons">
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-linkedin"></i></a>
+            <a href="#"><i class="fa fa-github"></i></a>
+          </div>
+        </div>
+      </footer>
+</body>
+<script>const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+
+    function switchTheme(e) {
+        if (e.target.checked) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+        else {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }    
+    }
+    
+    toggleSwitch.addEventListener('change', switchTheme, false);
+    
+    
+    const name = document.getElementById('name');
+    const email = document.getElementById('email');
+    const message = document.getElementById('message');
+    const contactForm = document.getElementById('contact-form');
+    const errorElement = document.getElementById('error');
+    const successMsg = document.getElementById('success-msg');
+    const submitBtn = document.getElementById('submit');
+      
+    const validate = (e) => {
+      e.preventDefault();
+     
+      if (name.value.length < 3) {
+        errorElement.innerHTML = 'Your name should be at least 3 characters long.';
+        return false;
+      } 
+      
+      if (!(email.value.includes('.') && (email.value.includes('@')))) {
+        errorElement.innerHTML = 'Please enter a valid email address.';
+        return false;
+      } 
+    
+      if (!emailIsValid(email.value)) {
+        errorElement.innerHTML = 'Please enter a valid email address.';
+        return false;
+      }
+    
+      if (message.value.length < 15) {
+        errorElement.innerHTML = 'Please write a longer message.';
+        return false;
+      }
+    
+      errorElement.innerHTML = '';
+      successMsg.innerHTML = 'Thank you! I will get back to you as soon as possible.'; 
+    
+      e.preventDefault();
+      setTimeout(function () {
+        successMsg.innerHTML = '';
+        document.getElementById('contact-form').reset();
+      }, 6000);
+    
+      return true;
+    
+    }
+    
+    const emailIsValid = email => {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+    
+    submitBtn.addEventListener('click', validate);</script>
+</html>

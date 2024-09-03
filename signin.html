@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarbonConnect - Sign Up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        
+        .left-section {
+            flex: 1;
+            background-image: url('https://petapixel.com/assets/uploads/2021/06/Social-Medias-Impact-on-Landscape-and-Nature-Photography.jpg'); /* Replace with your image URL */
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+        .left-section h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+        .left-section p {
+            font-size: 1.5em;
+            margin-top: 10px;
+        }
+        .right-section {
+            width: 400px;
+            background-color:#E7F1F2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            box-shadow: -5px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+        .right-section h2 {
+            margin-bottom: 20px;
+        }
+        .form-group {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        .form-group input[type="submit"] {
+            background-color: rgba(69, 129, 130);
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .form-group input[type="submit"]:hover {
+            background-color:rgba(69, 129, 130);
+        }
+        .right-section a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .right-section a:hover {
+            text-decoration: underline;
+        }
+        .form-group textarea {
+            height: 50px; /* Adjust the height to make it visually similar to input fields */
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="left-section">
+        <h1>CarbonConnect</h1>
+        <p>Simplify,Connect & Offset</p>
+    </div>
+
+    <div class="right-section">
+        <h2>Create An Account</h2>
+        <p>Already Have An Account? <a href="login.html">Log In</a></p>
+
+        <form>
+            <div class="form-group">
+                <label for="role">Sign Up As:</label>
+                <select id="role" name="role">
+                    <option value="company">Company/Organization</option>
+                    <option value="developer">Project Developer</option>
+                </select>
+            </div>
+            
+            <div id="common-fields">
+                <div class="form-group">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" name="first-name" placeholder="First Name">
+                </div>
+                <div class="form-group">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" name="last-name" placeholder="Last Name">
+                </div>
+            </div>
+            
+            <div id="company-fields">
+                <div class="form-group">
+                    <label for="company-name">Company Name</label>
+                    <input type="text" id="company-name" name="company-name" placeholder="Company Name">
+                </div>
+                <div class="form-group">
+                    <label for="company-email">Company Email</label>
+                    <input type="email" id="company-email" name="company-email" placeholder="Company Email">
+                </div>
+                <div class="form-group">
+                    <label for="companyContact">Contact Number:</label>
+                    <input type="text" id="companyContact" name="companyContact" placeholder="Enter your contact number">
+                </div>
+            </div>
+
+            <div id="developer-fields" style="display: none;">
+                <div class="form-group">
+                    <label for="project-name">Project Name</label>
+                    <input type="text" id="project-name" name="project-name" placeholder="Project Name">
+                </div>
+                <div class="form-group">
+                    <label for="project-description">Project Description</label>
+                    <textarea id="projectDescription" name="projectDescription" placeholder="Describe your project"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="Contact-email">Contact Email</label>
+                    <input type="email" id="Contact-email" name="Contact-email" placeholder="Contact Email">
+                </div>
+            </div>
+            
+           <div class="form-group">
+               <a href="login.html"> <input type="submit" value="Submit"></a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('role').addEventListener('change', function() {
+            var role = this.value;
+            var companyFields = document.getElementById('company-fields');
+            var developerFields = document.getElementById('developer-fields');
+            
+            if (role === 'company') {
+                companyFields.style.display = 'block';
+                developerFields.style.display = 'none';
+            } else if (role === 'developer') {
+                companyFields.style.display = 'none';
+                developerFields.style.display = 'block';
+            }
+        });
+    </script>
+
+</body>
+</html>

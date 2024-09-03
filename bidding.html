@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bidding Page</title>
+    <link rel="stylesheet" href="bidding.css">
+    <link rel="stylesheet" href="footer.css">
+</head>
+<body>
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    <script src="index.js"></script>
+    <div class="wrapper">
+        <div class="top_navbar">
+            <div class="hamburger">
+                <div class="one"></div>
+                <div class="two"></div>
+                <div class="three"></div>
+            </div>
+            <div class="top_menu">
+                <div class="logo">
+                    <img src="images/CarbonConnect-removebg-preview.png" alt="">
+                </div>
+                <ul>
+                    <li><a href="#"><i class="fas fa-search"></i></a></li>
+                    <li><a href="#"><i class="fas fa-bell"></i></a></li>
+                    <li><a href="#"><i class="fas fa-user"></i></a></li>
+                </ul>
+            </div>
+        </div> 
+
+        <div class="sidebar">
+            <ul>
+                <li><a href="index.html"><span class="icon"><i class="fas fa-book"></i></span><span class="title">Home</span></a></li>
+                <li><a href="project.html"><span class="icon"><i class="fas fa-file-video"></i></span><span class="title">Projects</span></a></li>
+                <li><a href="portfolio.html"><span class="icon"><i class="fas fa-volleyball-ball"></i></span><span class="title">Portfolio</span></a></li>
+                <li><a href="bidding.html" class="icon"><span class="icon"><i class="fas fa-blog"></i></span><span class="title">Bid</span></a></li>
+                <li><a href="quiz.html" class="icon"><span class="icon"><i class="fas fa-blog"></i></span><span class="title">Footprint Calculator</span></a></li>
+                <li><a href="contact.html"><span class="icon"><i class="fas fa-leaf"></i></span><span class="title">Contact Us</span></a></li>
+                <li><a href="about.html"><span class="icon"><i class="fas fa-leaf"></i></span><span class="title">About Us</span></a></li>
+            </ul>
+        </div>
+        <div class="banner">
+            <div class="heading">
+                <h2></h2>
+            </div>
+        </div>
+      
+        
+        
+        <!-- Bid Now Button -->
+        <div class="wrapper">
+            <!-- Bid Now Button -->
+            <div class="bid-section">
+                <button class="btn" id="bidNowBtn">Bid Now</button>
+            </div>
+    
+            <!-- Modal Structure -->
+            <div id="bidModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn" id="closeModal">&times;</span>
+                    <h3>Place Your Bid</h3>
+                    <form id="bidForm">
+                        <div class="form-group">
+                            <label for="companyId">Company ID:</label>
+                            <input type="number" id="companyId" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="projectId">Project ID:</label>
+                            <input type="number" id="projectId" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bidAmount">Bid Amount:</label>
+                            <input type="number" id="bidAmount" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn">Submit Bid</button>
+                    </form>
+                </div>
+            </div>
+    
+            <!-- Project Tables Grid -->
+            <div class="main">
+            <div id="projectsContainer" class="project-grid">
+                <!-- Project tables will be inserted here dynamically -->
+            </div></div>
+    
+        </div>
+        <footer class="footer-distributed">
+
+            <div class="footer-left">
+              <h3>Company<span>logo</span></h3>
+              <p class="footer-links">
+                <a href="index.html" class="link-1">Home</a>
+                <a href="collabs.html">Collaborators</a>
+                <a href="leaderboard.html">Leaderboard</a>
+                <a href="about.html">About</a>
+                <a href="faq.html">Faq</a>
+                <a href="contact.html">Contact</a>
+              </p>
+              <p class="footer-company-name">SPREEN © 2024</p>
+            </div>
+        
+            <div class="footer-center">
+              <div>
+                <i class="fa fa-map-marker"></i>
+                <p><span>Chitkara University</span> Rajpura, Punjab</p>
+              </div>
+              <div>
+                <i class="fa fa-phone"></i>
+                <p>+91-8570893065</p>
+              </div>
+              <div>
+                <i class="fa fa-envelope"></i>
+                <p><a href="mailto:support@company.com">spreen4570@gmail.com</a></p>
+              </div>
+            </div>
+        
+            <div class="footer-right">
+              <p class="footer-company-about">
+                <span>About the company</span>
+               Made  with the ambition to do good for the environment while trying to increase efforts from each individual's end.
+              </p>
+              <div class="footer-icons">
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-linkedin"></i></a>
+                <a href="#"><i class="fa fa-github"></i></a>
+              </div>
+            </div>
+          </footer>
+
+    <script>
+        // JavaScript to handle modal
+    //MODAL
+    document.addEventListener('DOMContentLoaded', (event) => {
+    const bidNowBtn = document.getElementById('bidNowBtn');
+    const modal = document.getElementById('bidModal');
+    const closeModal = document.getElementById('closeModal');
+
+    bidNowBtn.addEventListener('click', function () {
+        modal.style.display = 'block';
+    });
+
+    closeModal.addEventListener('click', function () {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', function (event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+
+
+    // Function to update project tables with bids
+    const projects = [
+        {
+            id: 1,
+            name: 'Solar Panel Installation',
+            image: 'https://www.packmile.com/wp-content/uploads/2023/11/Eco-Friendly-Packaging.jpg',
+            description: 'Install solar panels in residential areas',
+            startingBid: 300,
+            bids: [],
+            duration: 1 * 60 * 1000,
+            endTime: null
+            
+        },
+        {
+            id: 2,
+            name: 'Smart Home Automation',
+            description: 'Develop a smart home system for energy efficiency',
+            startingBid: 500,
+            bids: [],
+            duration: 1 * 60 * 1000,
+            endTime: null,
+            image: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400/d6be44114470925.603c2f8ac62fe.jpg' // Replace with actual image path
+        },
+        {
+            id: 3,
+            name: 'EV Charging Stations',
+            description: 'Set up EV charging stations in urban areas',
+            startingBid: 700,
+            bids: [],
+            duration: 20 * 60 * 1000,
+            endTime: null,
+            image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSV4rkV9Sj7bWUZhN-SCY9i9isCqDYGXTTAaw&s' // Replace with actual image path
+        },
+        {
+            id: 4,
+            name: 'Sustainable Packaging',
+            description: 'Create eco-friendly packaging solutions',
+            startingBid: 250,
+            bids: [],
+            duration: 12 * 60 * 1000,
+            endTime: null,
+            image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStCCMfp8AQ0JbAsEmChIuvU1TM2-4lVpVAPQ&shttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStCCMfp8AQ0JbAsEmChIuvU1TM2-4lVpVAPQ&s' // Replace with actual image path
+        },
+        {
+            id: 5,
+            name: 'Water Conservation',
+            description: 'Implement water-saving technologies in public spaces',
+            startingBid: 400,
+            bids: [],
+            duration: 18 * 60 * 1000,
+            endTime: null,
+            image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSV4rkV9Sj7bWUZhN-SCY9i9isCqDYGXTTAaw&s' // Replace with actual image path
+        }
+    ];
+
+
+    const companies = [
+        { id: 1, name: 'Tech Innovators', credits: 1500 },
+        { id: 2, name: 'Green Solutions', credits: 1200 },
+        { id: 3, name: 'Skyline Ventures', credits: 900 },
+        { id: 4, name: 'EcoTech Ltd.', credits: 2000 },
+        { id: 5, name: 'Bright Future Inc.', credits: 1700 }
+    ];
+
+    // Initialize end times for each project
+    projects.forEach(project => {
+        project.endTime = Date.now() + project.duration;
+    });
+
+    // Function to display projects with timers
+    function displayProjects() {
+        const projectsContainer = document.getElementById('projectsContainer');
+
+        // Clear previous content
+        projectsContainer.innerHTML = '';
+
+        projects.forEach(project => {
+            const projectDiv = document.createElement('div');
+            projectDiv.classList.add('project-table');
+            projectDiv.id = `project-${project.id}`;
+
+            const projectHeader = document.createElement('h3');
+            projectHeader.textContent = `${project.
+                name} (ID: ${project.id})`;
+            projectDiv.appendChild(projectHeader);
+
+
+            const img = document.createElement('img');
+        img.classList.add('project-image');
+        img.src = project.image; // Ensure this property matches your array
+        img.alt = project.name; // Optionally add alt text for accessibility
+
+        // Log image URL to check
+        console.log('Image URL:', img.src);
+
+        img.onerror = () => {
+            console.error('Failed to load image:', img.src);
+            img.src = 'path/to/default-image.jpg'; // Fallback image
+        };
+
+        projectDiv.appendChild(img);
+
+            const projectDesc = document.createElement('p');
+            projectDesc.textContent = project.description;
+            projectDiv.appendChild(projectDesc);
+
+            const timer = document.createElement('p');
+            timer.classList.add('timer');
+            projectDiv.appendChild(timer);
+
+            const projectTable = document.createElement('table');
+            projectTable.innerHTML = `
+            <thead>
+                <tr>
+                    <th>Company Name</th>
+                    <th>Bid Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        `;
+
+            projectDiv.appendChild(projectTable);
+            projectsContainer.appendChild(projectDiv);
+
+            // Start the countdown timer for this project
+            updateTimer(timer, project.endTime, project.id);
+        });
+    }
+
+
+
+
+    // Function to update project tables with bids
+    function updateProjectTable(projectId, bids) {
+        const projectTable = document.querySelector(`#project-${projectId} tbody`);
+        const rows = projectTable.querySelectorAll('tr');
+        rows.forEach(row => row.remove()); // Clear existing rows
+
+        let highestBid = 0;
+        let highestBidder = null;
+
+        bids.forEach(bid => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+            <td>${bid.companyName}</td>
+            <td>${bid.bidAmount}</td>
+        `;
+            projectTable.appendChild(row);
+
+            if (bid.bidAmount > highestBid) {
+                highestBid = bid.bidAmount;
+                highestBidder = row;
+            }
+        });
+
+        if (highestBidder) {
+            highestBidder.classList.add('highlight'); // Highlight highest bid
+        }
+        
+    }
+    function updateCreditsAfterWinning(companyId, creditsWon) {
+    // Retrieve existing credits from local storage
+    let companyCredits = JSON.parse(localStorage.getItem('companyCredits')) || {};
+
+    // Update the credits for the specific company
+    if (companyCredits[companyId]) {
+        companyCredits[companyId] += creditsWon;
+    } else {
+        companyCredits[companyId] = creditsWon;
+    }
+
+    // Store the updated credits back in local storage
+    localStorage.setItem('companyCredits', JSON.stringify(companyCredits));
+}
+
+    // Function to update the countdown timer
+    function updateTimer(element, endTime, projectId) {
+        function tick() {
+            const now = Date.now();
+            const remainingTime = endTime - now;
+
+            if (remainingTime <= 0) {
+                element.textContent = 'Bidding closed';
+                clearInterval(interval);
+                showWinner(projectId); // Show the winner when time ends
+            } else {
+                const minutes = Math.floor(remainingTime / 60000);
+                const seconds = Math.floor((remainingTime % 60000) / 1000);
+                element.textContent = `Time left: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            }
+        }
+
+        tick(); // Initial call to display the timer immediately
+        const interval = setInterval(tick, 1000); // Update the timer every second
+    }
+
+    // Function to display the winner and the price
+    function showWinner(projectId) {
+        const project = projects.find(p => p.id === projectId);
+        if (!project) return;
+
+        const projectDiv = document.getElementById(`project-${projectId}`);
+        if (!projectDiv) return;
+
+        // Hide the table
+        const projectTable = projectDiv.querySelector('table');
+        if (projectTable) {
+            projectTable.style.display = 'none';
+        }
+
+        // Find the highest bid
+        let highestBid = 0;
+        let winner = null;
+
+        project.bids.forEach(bid => {
+            if (bid.bidAmount > highestBid) {
+                highestBid = bid.bidAmount;
+                winner = bid;
+            }
+        });
+
+        // Display the winner and the price
+        const winnerInfo = document.createElement('div');
+        winnerInfo.classList.add('winner-info');
+
+        if (winner) {
+            winnerInfo.innerHTML = `
+            <h4>Winner: ${winner.companyName}</h4>
+            <p>Price to Pay for Credits: ${winner.bidAmount}</p>
+        `;
+        } else {
+            winnerInfo.innerHTML = '<h4>No bids were placed</h4>';
+        }
+
+        projectDiv.appendChild(winnerInfo);
+    }
+    // Function to handle bid submission
+    document.getElementById('bidForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const companyId = parseInt(document.getElementById('companyId').value);
+        const projectId = parseInt(document.getElementById('projectId').value);
+        const bidAmount = parseInt(document.getElementById('bidAmount').value);
+
+        const company = companies.find(c => c.id === companyId);
+        const project = projects.find(p => p.id === projectId);
+
+        if (!company || !project) {
+            alert('Invalid company or project ID');
+            return;
+        }
+
+        if (company.credits < bidAmount) {
+            alert('Not enough credits to place this bid');
+            return;
+        }
+
+        // Check if the bidding time has expired
+        if (Date.now() >= project.endTime) {
+            alert('Bidding time for this project has ended');
+            return;
+        }
+
+        // Deduct credits and place bid
+        company.credits -= bidAmount;
+        project.bids.push({ companyName: company.name, bidAmount });
+
+        // Update the display
+        updateProjectTable(projectId, project.bids);
+
+        alert('Bid placed successfully!');
+    });
+
+    // Function to update the countdown timer
+
+    // Initial display
+    displayProjects();
+    projects.forEach(project => updateProjectTable(project.id, project.bids));
+});
+
+    </script>
+</body>
+</html>
