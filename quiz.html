@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carbon Footprint Quiz</title>
+    <style>
+    body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.container {
+    width: 80%;
+    max-width: 800px;
+    min-height: 600px; /* Added this line to increase the height */
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+h1 {
+    color: #333;
+}
+.progress {
+    margin-bottom: 20px;
+}
+.progress-bar {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.progress-bar-inner {
+    height: 20px;
+    width: 0%;
+    background-color: #007BFF;
+    text-align: center;
+    line-height: 20px;
+    color: white;
+    font-weight: bold;
+}
+.question {
+    display: none;
+    margin-bottom: 20px;
+    text-align: left;
+}
+.question.active {
+    display: block;
+}
+.question label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+}
+.options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.option-box {
+    width: 100%;
+    background: #28a745;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    color: #fff;
+    text-align: left;
+}
+.option-box:hover {
+    background-color: #218838;
+    transform: scale(1.02);
+}
+.option-box input {
+    margin-right: 10px;
+}
+.navigation {
+    margin-top: 20px;
+}
+button {
+    padding: 10px 20px;
+    background: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+button:hover {
+    background: #0056b3;
+}
+.result {
+    display: none;
+    margin-top: 20px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculate Your Company’s Carbon Footprint</h1>
+        <div class="progress">
+            <div class="progress-bar">
+                <div class="progress-bar-inner" id="progress-bar-inner">Question 1 of 7</div>
+            </div>
+        </div>
+        <form id="quiz-form">
+            <div class="question" id="q1">
+                <label>1. How many employees does your company have?</label>
+                <div class="options">
+                    <div class="option-box">
+                        <label><input type="radio" name="employees" value="1"> Less than 10 employees</label>
+                    </div>
+                    <div class="option-box">
+                        <label><input type="radio" name="employees" value="3"> 10-50 employees</label>
+                    </div>
+                    <div class="option-box">
+                        <label><input type="radio" name="employees" value="5"> 50-200 employees</label>
+                    </div>
+                    <div class="option-box">
+                        <label><input type="radio" name="employees" value="10"> More than 200 employees</label>
+                    </div>
+                </div>
+            </div>
+            <div class="question" id="q2">
+                <label>2. What is your company's annual energy consumption?</label>
+                <div class="options">
+                    <div class="option-box">
+                        <label><input type="radio" name="energy" value="1"> Less than 50,000 kWh</label>
+                    </div>
+                    <div class="option-box">
+                        <label><input type="radio" name="energy" value="3"> 50,000-200,000 kWh</label>
+                    </div>
+                    <div class="option-box">
+                        <label><input type="radio" name="energy" value="5"> 200,000-500,000 kWh</label>
+                    </div>
+                    <div class="option-box">
+                        <label><input type="radio" name="energy" value="10"> More than 500,000 kWh</label>
+                    </div>
+                </div>
+            </div>
+            <div class="question" id="q3">
+                <label>3. How does your company primarily transport goods or employees?</label>
+                <div class="options">
+                    <div class="option-box">
+                        <label><input type="radio" name="transport" value="1"> Primarily remote or local</label>
+                    </div>
+                    <div class="option-box">
+                        <label><input type="radio" name="transport" value="2"> Short-distance transport</label>
+                    </div>
+                    <div class="option-box">
+                        <label><input type="radio" name="transport" value="5"> Mixed short- and long-distance transport</label>
+                    </div>
+                    <div class="option-box">
+                        <label><input type="radio" name="transport" value="10"> Primarily long-distance or international</label>
+                    </div>
+                </div>
+            </div>
+            <div class="question" id="q4">
+                <label>4. How does your company handle waste?</label>
+                <div class="options">
+                    <div class="option-box">
+                        <label><input type="radio" name="waste" value="1"> Minimal waste, fully recycled</label>
+                    </div>
+                    <div class="option-box">
+                        <label><input type="radio" name="waste" value="3"> Some waste, mostly recycled</label>
+                    </div>
+                    <div class="option-box">
+                        <label><input type="radio" name="waste" value="5"> Significant waste, partly recycled</label>
+                    </div>
+                    <div class="option-box">
+                        <label><input type="radio" name="waste" value="10"> Large amounts of waste, mostly not recycled</label>
+                    </div>
+                </div>
+            </div>
+            <div class="question" id="q5">
+                <label>5. How often does your company rely on international suppliers?</label>
+                <div class="options">
+                    <div class="option-box">
+                        <label><input type="radio" name="supply" value="1"> Rarely or never</label>
+                    </div>
+                    <div class="option-box">
+                        <label><input type="radio" name="supply" value="3"> Occasionally</label>
+                    </div>
+                    <div class="option-box">
+                        <label><input type="radio" name="supply" value="5"> Frequently</label>
+                    </div>
+                    <div class="option-box">
+                        <label><input type="radio" name="supply" value="10"> Very frequently</label>
+                    </div>
+                </div>
+            </div>
+            <div class="question" id="q6">
+                <label>6. Has your company previously invested in carbon offsets?</label>
+                <div class="options">
+                    <div class="option-box">
+                        <label><input type="radio" name="offsets" value="1"> Yes, regularly</label>
+                    </div>
+                    <div class="option-box">
+                        <label><input type="radio" name="offsets" value="3"> Occasionally</label>
+                    </div>
+                    <div class="option-box">
+                        <label><input type="radio" name="offsets" value="5"> Rarely</label>
+                    </div>
+                    <div class="option-box">
+                        <label><input type="radio" name="offsets" value="10"> Never</label>
+                    </div>
+                </div>
+            </div>
+            <div class="question" id="q7">
+                <label>7. How energy-efficient is your company’s workspace?</label>
+                <div class="options">
+                    <div class="option-box">
+                        <label><input type="radio" name="efficiency" value="1"> High-efficiency building</label>
+                    </div>
+                    <div class="option-box">
+                        <label><input type="radio" name="efficiency" value="3"> Moderately efficient</label>
+                    </div>
+                    <div class="option-box">
+                        <label><input type="radio" name="efficiency" value="5"> Low efficiency</label>
+                    </div>
+                    <div class="option-box">
+                        <label><input type="radio" name="efficiency" value="10"> Inefficient, high energy use</label>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button type="button" id="back-button" onclick="navigate(-1)" disabled>Back</button>
+                <button type="button" id="next-button" onclick="nextQuestion()">Next</button>
+            </div>
+        </form>
+        <div class="result" id="result">
+            <h2>Your Carbon Footprint Score:</h2>
+            <p id="score"></p>
+        </div>
+    </div>
+    <script>
+        let currentQuestion = 1;
+        const totalQuestions = 7;
+        const progressBarInner = document.getElementById('progress-bar-inner');
+
+        function updateProgressBar() {
+            progressBarInner.style.width = ${(currentQuestion / totalQuestions) * 100}%;
+            progressBarInner.textContent = Question ${currentQuestion} of ${totalQuestions};
+        }
+
+        function showQuestion(questionNumber) {
+            const questions = document.querySelectorAll('.question');
+            questions.forEach(question => {
+                question.classList.remove('active');
+            });
+            document.getElementById(q${questionNumber}).classList.add('active');
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+                updateProgressBar();
+                if (currentQuestion === totalQuestions) {
+                    document.getElementById('next-button').textContent = 'Submit';
+                }
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            const form = document.getElementById('quiz-form');
+            const formData = new FormData(form);
+            let score = 0;
+
+            for (const value of formData.values()) {
+                score += parseInt(value);
+            }
+
+            document.getElementById('quiz-form').style.display = 'none';
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+
+            const scoreText = document.getElementById('score');
+            scoreText.textContent = `Your company’s estimated carbon footprint score is: ${score}. 
+            A lower score indicates a smaller carbon footprint, while a higher score suggests greater emissions. 
+            Consider ways to reduce your company’s impact by improving efficiency, reducing waste, and exploring sustainable practices.`;
+        }
+
+        // Initialize
+        showQuestion(currentQuestion);
+        updateProgressBar();
+    </script>
+</body>
+</html>
