@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarbonConnect - Payment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .left-section {
+            flex: 1;
+            background-image: url('https://petapixel.com/assets/uploads/2021/06/Social-Medias-Impact-on-Landscape-and-Nature-Photography.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+        .left-section h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+        .left-section p {
+            font-size: 1.5em;
+            margin-top: 10px;
+        }
+        .right-section {
+            width: 400px;
+            background-color: #E7F1F2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            box-shadow: -5px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+        .right-section h2 {
+            margin-bottom: 20px;
+        }
+        .form-group {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .form-group button {
+            border-width: 1px;
+            width: 100%;
+            height: 50px;
+            border-radius: 5px;
+            background: #6fb07f;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .bill-section {
+            width: 100%;
+            margin-bottom: 20px;
+            text-align: left;
+            font-size: 1.2em;
+        }
+        .bill-section h3 {
+            margin-bottom: 10px;
+        }
+        .form-group button.paid img {
+            display: none;
+        }
+        .hidden {
+            display: none;
+        }
+        .bill-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .bill-table th, .bill-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        .bill-table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .bill-table tfoot td {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="left-section">
+        <h1>CarbonConnect</h1>
+        <p>Simplify, Connect & Offset</p>
+    </div>
+    <div class="right-section">
+        <h2>Payment Portal</h2>
+        <!-- Company Selection Dropdown -->
+        <div class="form-group">
+            <label for="company-select">Select Company:</label>
+            <select id="company-select" name="company-select">
+                <option value="Tech Innovators">Tech Innovators</option>
+                <option value="Green Solutions">Green Solutions</option>
+                <option value="Skyline Ventures">Skyline Ventures</option>
+                <option value="EcoTech Ltd.">EcoTech Ltd.</option>
+                <option value="Bright Future Inc.">Bright Future Inc.</option>
+            </select>
+        </div>
+        <!-- Bill Section (To Display Fetched Bill) -->
+        <div class="bill-section" id="bill-section">
+            <h3>Bill Details</h3>
+            <div id="bill-content">
+                <!-- Bill details will be fetched and inserted here -->
+            </div>
+            <button id="proceed-button">Proceed</button>
+        </div>
+        <form id="payment-form" class="hidden">
+            <div class="form-group">
+                <label for="card-number">Card Number</label>
+                <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9123 4567" required>
+            </div>
+            <div class="form-group">
+                <label for="card-name">Name on Card</label>
+                <input type="text" id="card-name" name="card-name" placeholder="John Doe" required>
+            </div>
+            <div class="form-group">
+                <label for="expiry-date">Expiry Date</label>
+                <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YY" required>
+            </div>
+            <div class="form-group">
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" name="cvv" placeholder="123" required>
+            </div>
+            <div class="form-group">
+                <label for="billing-address">Billing Address</label>
+                <input type="text" id="billing-address" name="billing-address" placeholder="123 Main St, City, Country" required>
+            </div>
+            <div class="form-group">
+                <button class="btn" id="pay-button">Pay Now</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        // Function to fetch and display bill data
+        async function fetchBill(company) {
+            try {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const filteredCart = cart.filter(item => item.companyName === company);
+                if (filteredCart.length === 0) {
+                    document.getElementById('bill-content').innerHTML = '<p>No data available for the selected company.</p>';
+                    return;
+                }
+                const billContent = filteredCart.map(item => `
+                    <tr>
+                        <td>${item.projectName}</td>
+                        <td>${item.companyName}</td>
+                        <td>${item.credits}</td>
+                        <td>${item.totalAmount}</td>
+                    </tr>
+                `).join('');
+
+                const subtotal = filteredCart.reduce((acc, item) => acc + parseFloat(item.totalAmount), 0);
+                const tax = (subtotal * 0.08).toFixed(2);
+                const total = (subtotal + parseFloat(tax)).toFixed(2);
+
+                const billHTML = `
+                    <table class="bill-table">
+                        <thead>
+                            <tr>
+                                <th>Project Name</th>
+                                <th>Company Name</th>
+                                <th>Credits</th>
+                                <th>Total Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${billContent}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3">Subtotal:</td>
+                                <td>$${subtotal.toFixed(2)}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Tax (8%):</td>
+                                <td>$${tax}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Total:</td>
+                                <td>$${total}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                `;
+
+                document.getElementById('bill-content').innerHTML = billHTML;
+            } catch (error) {
+                document.getElementById('bill-content').innerHTML = 'Error fetching bill data.';
+            }
+        }
+
+        // Handle company selection change
+        document.getElementById('company-select').addEventListener('change', function() {
+            const selectedCompany = this.value;
+            fetchBill(selectedCompany);
+        });
+
+        // Call the function to fetch bill when the page loads with default company
+        window.onload = () => {
+            const defaultCompany = document.getElementById('company-select').value;
+            fetchBill(defaultCompany);
+        };
+
+        // Handle Proceed Button Click
+        document.getElementById('proceed-button').addEventListener('click', function() {
+            document.getElementById('bill-section').classList.add('hidden');
+            document.getElementById('payment-form').classList.remove('hidden');
+        });
+
+        // Payment form submission
+        document.getElementById('payment-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Simulate payment processing
+            const button = document.getElementById('pay-button');
+            button.classList.add('paid');
+
+            // Simulate a successful payment with a timeout
+            setTimeout(() => {
+                alert('Payment successful!');
+                button.classList.remove('paid');
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

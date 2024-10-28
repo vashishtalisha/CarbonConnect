@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carbon Footprint Quiz</title>
+    <link rel="stylesheet" href="nav.css">
+    <style>
+        /* Import Google Font for a modern look */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'); /* Nature-themed background image */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        /* Overlay to darken the background for better readability */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            text-align: center;
+            color: #2e8b57; /* Sea Green */
+            margin-bottom: 20px;
+        }
+
+        .progress {
+            margin-bottom: 25px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 25px;
+            overflow: hidden;
+            height: 25px;
+        }
+
+        .progress-bar-inner {
+            height: 100%;
+            width: 0%;
+            background-color: #2e8b57;
+            text-align: center;
+            line-height: 25px;
+            color: white;
+            font-weight: bold;
+            transition: width 0.4s ease;
+            border-radius: 25px;
+        }
+
+        .question {
+            display: none;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .question.active {
+            display: block;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .question label {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #210606f2;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-box {
+            background: #28a745; /* Green */
+            border-radius: 8px;
+            padding: 15px 20px;
+            cursor: pointer;
+            color: white;
+            transition: background 0.3s, transform 0.3s;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .option-box:hover {
+            background: #218838; /* Darker Green */
+            transform: translateY(-2px);
+        }
+
+        .option-box input {
+            margin-right: 15px;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 25px;
+            background: #2e8b57;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        button:hover:not(:disabled) {
+            background: #276749; /* Darker Sea Green */
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background: #a0aec0; /* Gray */
+            cursor: not-allowed;
+        }
+
+        .result {
+            display: none;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .result h2 {
+            color: #2e8b57;
+            margin-bottom: 15px;
+        }
+
+        .result p {
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .option-box {
+                padding: 12px 15px;
+            }
+
+            button {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar"></header>
+        <img src="images/CarbonConnect-removebg-preview.png" alt="Logo">
+        <nav>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="project.html">Curated Projects</a></li>
+            <li><a href="bid1.html">Bid&Buy</a></li>
+            <li><a href="quiz.html">Footprint Calculator</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          
+            
+        </nav>
+        <li><a href="abc.html" class="profile-icon">Login/Sign Up</a></li>
+    </header>
+    <div class="overlay"></div>
+    <div class="container">
+        <h1>Calculate Your Company’s Carbon Footprint</h1>
+        <div class="progress">
+            <div class="progress-bar">
+                <div class="progress-bar-inner" id="progress-bar-inner">Question 1 of 7</div>
+            </div>
+        </div>
+        <form id="quiz-form">
+            <div class="question active" id="q1">
+                <label>1. How many employees does your company have?</label>
+                <div class="options">
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="employees" value="1" id="employees1">
+                        <label for="employees1">Less than 10 employees</label>
+                    </div>
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="employees" value="3" id="employees2">
+                        <label for="employees2">10-50 employees</label>
+                    </div>
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="employees" value="5" id="employees3">
+                        <label for="employees3">50-200 employees</label>
+                    </div>
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="employees" value="10" id="employees4">
+                        <label for="employees4">More than 200 employees</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question" id="q2">
+                <label>2. What is your company's annual energy consumption?</label>
+                <div class="options">
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="energy" value="1" id="energy1">
+                        <label for="energy1">Less than 50,000 kWh</label>
+                    </div>
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="energy" value="3" id="energy2">
+                        <label for="energy2">50,000-200,000 kWh</label>
+                    </div>
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="energy" value="5" id="energy3">
+                        <label for="energy3">200,000-500,000 kWh</label>
+                    </div>
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="energy" value="10" id="energy4">
+                        <label for="energy4">More than 500,000 kWh</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question" id="q3">
+                <label>3. How does your company primarily transport goods or employees?</label>
+                <div class="options">
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="transport" value="1" id="transport1">
+                        <label for="transport1">Primarily remote or local</label>
+                    </div>
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="transport" value="2" id="transport2">
+                        <label for="transport2">Short-distance transport</label>
+                    </div>
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="transport" value="5" id="transport3">
+                        <label for="transport3">Mixed short- and long-distance transport</label>
+                    </div>
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="transport" value="10" id="transport4">
+                        <label for="transport4">Primarily long-distance or international</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question" id="q4">
+                <label>4. How does your company handle waste?</label>
+                <div class="options">
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="waste" value="1" id="waste1">
+                        <label for="waste1">Minimal waste, fully recycled</label>
+                    </div>
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="waste" value="3" id="waste2">
+                        <label for="waste2">Some waste, mostly recycled</label>
+                    </div>
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="waste" value="5" id="waste3">
+                        <label for="waste3">Significant waste, partly recycled</label>
+                    </div>
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="waste" value="10" id="waste4">
+                        <label for="waste4">Large amounts of waste, mostly not recycled</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question" id="q5">
+                <label>5. How often does your company rely on international suppliers?</label>
+                <div class="options">
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="supply" value="1" id="supply1">
+                        <label for="supply1">Rarely or never</label>
+                    </div>
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="supply" value="3" id="supply2">
+                        <label for="supply2">Occasionally</label>
+                    </div>
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="supply" value="5" id="supply3">
+                        <label for="supply3">Frequently</label>
+                    </div>
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="supply" value="10" id="supply4">
+                        <label for="supply4">Very frequently</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question" id="q6">
+                <label>6. Has your company previously invested in carbon offsets?</label>
+                <div class="options">
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="offsets" value="1" id="offsets1">
+                        <label for="offsets1">Yes, regularly</label>
+                    </div>
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="offsets" value="3" id="offsets2">
+                        <label for="offsets2">Occasionally</label>
+                    </div>
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="offsets" value="5" id="offsets3">
+                        <label for="offsets3">Rarely</label>
+                    </div>
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="offsets" value="10" id="offsets4">
+                        <label for="offsets4">Never</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question" id="q7">
+                <label>7. How energy-efficient is your company’s workspace?</label>
+                <div class="options">
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="efficiency" value="1" id="efficiency1">
+                        <label for="efficiency1">High-efficiency building</label>
+                    </div>
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="efficiency" value="3" id="efficiency2">
+                        <label for="efficiency2">Moderately efficient</label>
+                    </div>
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="efficiency" value="5" id="efficiency3">
+                        <label for="efficiency3">Low efficiency</label>
+                    </div>
+                    <div class="option-box" onclick="selectOption(this)">
+                        <input type="radio" name="efficiency" value="10" id="efficiency4">
+                        <label for="efficiency4">Inefficient, high energy use</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <button type="button" id="back-button" onclick="prevQuestion()" disabled>Back</button>
+                <button type="button" id="next-button" onclick="nextQuestion()">Next</button>
+            </div>
+        </form>
+        <div class="result" id="result">
+            <h2>Your Carbon Footprint Score:</h2>
+            <p id="score"></p>
+            <p id="feedback"></p>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 1;
+        const totalQuestions = 7;
+        const progressBarInner = document.getElementById('progress-bar-inner');
+        const backButton = document.getElementById('back-button');
+        const nextButton = document.getElementById('next-button');
+        const form = document.getElementById('quiz-form');
+        const resultDiv = document.getElementById('result');
+        const scoreText = document.getElementById('score');
+        const feedbackText = document.getElementById('feedback');
+
+        // Object to store selected answers
+        let answers = {};
+
+        function updateProgressBar() {
+            const progressPercentage = (currentQuestion / totalQuestions) * 100;
+            progressBarInner.style.width = ${progressPercentage}%;
+            progressBarInner.textContent = Question ${currentQuestion} of ${totalQuestions};
+        }
+
+        function showQuestion(questionNumber) {
+            // Hide all questions
+            document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+
+            // Show the current question
+            const currentQ = document.getElementById(q${questionNumber});
+            if (currentQ) {
+                currentQ.classList.add('active');
+            }
+
+            // Update the progress bar
+            updateProgressBar();
+
+            // Update Back button state
+            backButton.disabled = questionNumber === 1;
+
+            // Update Next button text
+            if (questionNumber === totalQuestions) {
+                nextButton.textContent = 'Submit';
+            } else {
+                nextButton.textContent = 'Next';
+            }
+        }
+
+        function nextQuestion() {
+            const currentQ = document.getElementById(q${currentQuestion});
+            const selectedOption = currentQ.querySelector('input[type="radio"]:checked');
+
+            if (!selectedOption) {
+                alert('Please select an option before proceeding.');
+                return;
+            }
+
+            // Save the answer
+            const name = selectedOption.name;
+            const value = parseInt(selectedOption.value);
+            answers[name] = value;
+
+            if (currentQuestion < totalQuestions) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+            } else {
+                showResult();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 1) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        function showResult() {
+            // Calculate total score
+            let totalScore = Object.values(answers).reduce((a, b) => a + b, 0);
+
+            // Hide the form and show the result
+            form.style.display = 'none';
+            resultDiv.style.display = 'block';
+
+            // Display the score
+            scoreText.textContent = "Your company estimated carbon footprint score is: ${totalScore}";
+
+            // Provide feedback based on the score
+            let feedback = '';
+            if (totalScore <= 14) {
+                feedback = 'Excellent! Your company has a minimal carbon footprint. Keep up the sustainable practices!';
+            } else if (totalScore <= 28) {
+                feedback = 'Good job! There are still some areas where you can reduce your carbon footprint further.';
+            } else if (totalScore <= 42) {
+                feedback = 'Fair. Consider implementing more sustainable practices to lower your carbon emissions.';
+            } else {
+                feedback = 'High carbon footprint detected. It’s crucial to take immediate steps towards sustainability to reduce your environmental impact.';
+            }
+            feedbackText.textContent = feedback;
+        }
+
+        // Function to handle clicking on the entire option box
+        function selectOption(optionBox) {
+            const input = optionBox.querySelector('input[type="radio"]');
+            if (input) {
+                input.checked = true;
+            }
+        }
+
+        // Initialize the first question
+        showQuestion(currentQuestion);
+    </script>
+</body>
+</html>
